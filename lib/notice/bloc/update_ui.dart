@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_demo/notice/bloc/test_ui1.dart';
 import 'package:my_demo/notice/bloc/test_ui2.dart';
 import 'package:my_demo/uiutils/ui_utils.dart';
-import 'package:my_demo/notice/bloc/base_ui.dart';
-import 'package:my_demo/notice/bloc/base_mgr.dart';
+import 'package:my_demo/notice/bloc/me_state.dart';
+import 'package:my_demo/notice/bloc/me_state_mgr.dart';
 
 class UpdateUI extends StatefulWidget {
   final String title;
@@ -18,7 +18,7 @@ class UpdateUI extends StatefulWidget {
 
 
 // class _PageState extends State < UpdateUI > {
-class _PageState extends BaseUI < UpdateUI > {
+class _PageState extends MeState < UpdateUI > {
   final String title;
   _PageState(this.title);
 
@@ -45,17 +45,17 @@ class _PageState extends BaseUI < UpdateUI > {
 
 
   void _printNotice() {
-    BaseMgr().printNotice();
+    MeStateMgr().printNotice();
   }
   void _sendAll() {
-    BaseMgr().sendAllNotice('update to all');
+    MeStateMgr().sendAllNotice('update to all');
   }
 
 
   @override
   void initState() {
     super.initState();
-    BaseMgr().registerNotice(kName, this);
+    MeStateMgr().registerNotice(kName, this);
   }
 
 

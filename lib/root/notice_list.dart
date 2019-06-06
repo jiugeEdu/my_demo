@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_demo/notice/bloc/update_ui.dart';
 
 class NoticeList extends StatefulWidget {
   final String title;
@@ -20,7 +19,7 @@ class _PageState extends State < NoticeList > {
 
   void _pressBtn(int idx, BuildContext context, var pageTitle) {
     var pages = [
-      UpdateUI(title: pageTitle,),
+      // UpdateUI(title: pageTitle,),
     ];
 
     if (pages[idx] != null) {

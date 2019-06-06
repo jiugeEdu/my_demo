@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo/uiutils/ui_utils.dart';
-import 'package:my_demo/notice/bloc/base_ui.dart';
-import 'package:my_demo/notice/bloc/base_mgr.dart';
+import 'package:my_demo/notice/bloc/me_state.dart';
+import 'package:my_demo/notice/bloc/me_state_mgr.dart';
 
 class TestUI2 extends StatefulWidget {
   TestUI2({
@@ -14,28 +14,28 @@ class TestUI2 extends StatefulWidget {
 
 
 
-class _PageState extends BaseUI < TestUI2 > {
+class _PageState extends MeState < TestUI2 > {
   String noticeText = 'noticeText';
   final kName = 'test_ui2';
 
   void _send3() {
-    BaseMgr().sendNotice('update_ui', kName);
+    MeStateMgr().sendNotice('update_ui', kName);
   }
   void _send2() {
-    BaseMgr().sendNotice(kName, 'test_ui2 to test_ui2');
+    MeStateMgr().sendNotice(kName, 'test_ui2 to test_ui2');
   }
   void _printNotice() {
-    BaseMgr().printNotice();
+    MeStateMgr().printNotice();
   }
   void _sendAll() {
-    BaseMgr().sendAllNotice('ui2 send all');
+    MeStateMgr().sendAllNotice('ui2 send all');
   }
 
 
   @override
   void initState() {
     super.initState();
-    BaseMgr().registerNotice(kName, this);
+    MeStateMgr().registerNotice(kName, this);
     setState(() {});
   }
 

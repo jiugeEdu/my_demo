@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_demo/me/notice/update_ui.dart';
 
 class MeList extends StatefulWidget {
   final String title;
@@ -14,10 +15,12 @@ class MeList extends StatefulWidget {
 
 class _PageState extends State < MeList > {
   final List < String > items = [
+    '通知1',
   ];
 
   void _pressBtn(int idx, BuildContext context, var pageTitle) {
     var pages = [
+      UpdateUI(title: pageTitle,),
     ];
 
     if (pages[idx] != null) {
