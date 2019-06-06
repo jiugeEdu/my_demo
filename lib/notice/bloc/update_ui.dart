@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo/notice/bloc/test_ui1.dart';
+import 'package:my_demo/notice/bloc/test_ui2.dart';
 import 'package:my_demo/uiutils/ui_utils.dart';
+import 'package:my_demo/notice/bloc/base_ui.dart';
+import 'package:my_demo/notice/bloc/base_mgr.dart';
 
 class UpdateUI extends StatefulWidget {
   final String title;
@@ -10,19 +13,27 @@ class UpdateUI extends StatefulWidget {
   }): super(key: key);
 
   @override
-  _PageState createState() => new _PageState();
+  _PageState createState() => new _PageState(this.title);
 }
 
 
-class _PageState extends State < UpdateUI > {
+// class _PageState extends State < UpdateUI > {
+class _PageState extends BaseUI < UpdateUI > {
+  final String title;
+  _PageState(this.title);
+
+  final kName = 'update_ui';
+  String _initData = 'init_data';
   final List < String > items = [
-    '测试 1',
+    '测试1',
+    '测试2',
   ];
 
   void _pressBtn(int idx, BuildContext context,
     var pageTitle) {
     var pages = [
       TestUI1(),
+      TestUI2(),
     ];
 
     if (pages[idx] != null) {
@@ -33,28 +44,76 @@ class _PageState extends State < UpdateUI > {
   }
 
 
+  void _printNotice() {
+    BaseMgr().printNotice();
+  }
+  void _sendAll() {
+    BaseMgr().sendAllNotice('update to all');
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    BaseMgr().registerNotice(kName, this);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(this.title),
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: IconButton(
-              icon: Icon(Icons.settings_input_svideo, size: 28.0, ),
-              onPressed: () {
-                _pressBtn(index, context, items[index]);
-              },
-            ),
-            title: Text('${items[index]}'),
-          );
-        },
+      body: Column(
+        children: < Widget > [
+          UIUtills.getDisplayText(_initData),
+          SizedBox(height: 5,),
+          UIUtills.getTextBtn('打印key', _printNotice),
+          UIUtills.getTextBtn('发送通知all', _sendAll),
+          Expanded(
+            child: _getBuilder(context),
+          ),
+        ],
       ),
     );
   }
 
 
+  Widget _getBuilder(BuildContext pContext) {
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: IconButton(
+            icon: Icon(Icons.settings_input_svideo, size: 28.0, ),
+            onPressed: () {
+              _pressBtn(index, context, items[index]);
+            },
+          ),
+          title: Text('${items[index]}'),
+        );
+      },
+    );
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void reveiveNotice(data, {
+    int dataType,
+  }) {
+    _initData = data.toString();
+    setState(() {});
+  }
+
+  @override
+  void reveiveAllNotice(data) {
+    _initData = data.toString();
+    setState(() {});
+  }
 }
