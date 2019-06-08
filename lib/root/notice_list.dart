@@ -14,7 +14,7 @@ class NoticeList extends StatefulWidget {
 
 class _PageState extends State < NoticeList > {
   final List < String > items = [
-    '数据变动通知界面',
+    'Bloc通知',
   ];
 
   void _pressBtn(int idx, BuildContext context, var pageTitle) {
